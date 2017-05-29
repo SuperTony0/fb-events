@@ -2,20 +2,12 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h1></h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <fb-signin-button
+        :params="fbSignInParams"
+        @success="onSignInSuccess"
+        @error="onSignInError">
+        Sign in with Facebook
+    </fb-signin-button>
   </div>
 </template>
 
@@ -24,7 +16,20 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      fbSignInParams: {
+        scope: 'email,user_likes',
+        return_scopes: true
+      }
+    }
+  },
+  methods: {
+    onSignInSuccess (response) {
+      FB.api('/me', dude => {
+        console.log(`Good to see you, ${dude.name}.`)
+      })
+    },
+    onSignInError (error) {
+      console.log('OH NOES', error)
     }
   }
 }
@@ -56,5 +61,13 @@ li {
 
 a {
   color: #42b983;
+}
+.fb-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #4267b2;
+  color: #fff;
 }
 </style>
