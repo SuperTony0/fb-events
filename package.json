@@ -12,6 +12,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "material-design-lite": "^1.3.0",
     "vue": "^2.3.3",
+    "vue-facebook-signin-button": "^1.0.1",
     "vue-material": "^0.7.1"
   },
   "devDependencies": {
