@@ -17,16 +17,23 @@ export default {
   data () {
     return {
       fbSignInParams: {
-        scope: 'email,user_likes',
+        scope: 'email,user_likes,user_events',
         return_scopes: true
-      }
+      },
+      userId: ''
     }
   },
   methods: {
     onSignInSuccess (response) {
-      FB.api('/me', dude => {
-        console.log(`Good to see you, ${dude.name}.`)
-      })
+      this.userId = response.authResponse.userID
+      FB.api(
+        "/" + this.userId + "/events",
+        function (response) {
+          if (response && !response.error) {
+          console.log(response)
+          }
+        }
+      )
     },
     onSignInError (error) {
       console.log('OH NOES', error)
