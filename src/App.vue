@@ -1,44 +1,12 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1></h1>
-    <fb-signin-button
-        :params="fbSignInParams"
-        @success="onSignInSuccess"
-        @error="onSignInError">
-        Sign in with Facebook
-    </fb-signin-button>
+ <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data () {
-    return {
-      fbSignInParams: {
-        scope: 'email,user_likes,user_events',
-        return_scopes: true
-      },
-      userId: ''
-    }
-  },
-  methods: {
-    onSignInSuccess (response) {
-      this.userId = response.authResponse.userID
-      FB.api(
-        "/" + this.userId + "/events",
-        function (response) {
-          if (response && !response.error) {
-          console.log(response)
-          }
-        }
-      )
-    },
-    onSignInError (error) {
-      console.log('OH NOES', error)
-    }
-  }
+  name: 'app'
 }
 </script>
 
