@@ -39,6 +39,7 @@ a {
 }
 .fb-signin-button {
   /* This is where you control how the button looks. Be creative! */
+  /*Adding a github test comment*/
   display: inline-block;
   padding: 4px 8px;
   border-radius: 3px;
