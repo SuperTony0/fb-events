@@ -21,11 +21,12 @@ export default {
     data () {
     return {
       fbSignInParams: {
-        scope: 'email,user_likes,user_events',
-        return_scopes: true,
-        futureEvents: [],
-        pastEvents: []
-      }
+        scope: 'email,user_likes,user_events,user_friends',
+        return_scopes: true
+      },
+      firstFriendId: '',
+      futureEvents: [],
+      pastEvents: []
     }
   },
   methods: {
@@ -52,9 +53,30 @@ export default {
           }
         }
       )
-    }
+    },
+    getMyFriendEvents (firstFriendId) {
+      FB.api(
+        "/" + firstFriendId + "/events",
+        function (response){
+          console.log("Friends response",response)
+        })
+    },
+    getMyFriends () {
+      FB.api(
+        "/me/taggable_friends?limit=1000",
+        function (response) {
+          var firstFriendId = response.data[0].id;
+          console.log(this)
+          FB.api(
+            "/" + firstFriendId + "/events",
+            function (response){
+            console.log("Friends response",response)
+        })
+        })
+    },
     onSignInSuccess (response) {
-      getMyEvents();
+      this.getMyEvents();
+      this.getMyFriends()
     },
     onSignInError (error) {
       console.log('OH NOES', error)
